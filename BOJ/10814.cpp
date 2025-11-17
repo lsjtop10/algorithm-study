@@ -24,7 +24,6 @@ int main(){
         cin >> data[i].Name;
     }
 
-
     stable_sort(data.begin(), data.end(), compare);
 
     for(int i = 0; i < data.size(); i++){
