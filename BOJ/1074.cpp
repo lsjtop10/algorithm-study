@@ -15,7 +15,7 @@ int length(int N){
 }
 
 bool isBetween(int val, int a, int b){
-    return val >= a && val <= b;
+    return val >= a && val < b;
 }
 
 int main(){
@@ -30,19 +30,20 @@ int main(){
         int loc = 0;
         int half = length(N)/2;
         
-        if(isBetween(r, 0, half - 1)){
-            if(isBetween(c, 0, half - 1)){ 
+
+        if(isBetween(r, 0, half )){
+            if(isBetween(c, 0, half)){ 
                 loc = 0; 
             }
-            else if(isBetween(c, half, length(N) - 1)){ 
+            else if(isBetween(c, half, length(N))){ 
                 loc = 1; 
                 c = c - half;
             }
-        }else if (isBetween(r,half, length(N) - 1)){
-            if(isBetween(c, 0, half - 1)){
+        }else if (isBetween(r,half, length(N))){
+            if(isBetween(c, 0, half)){
                 loc = 2;
                 r = r - half; 
-            }else if(isBetween(c, half, length(N) - 1)){
+            }else if(isBetween(c, half, length(N))){
                 loc = 3;
                 r = r - half;
                 c = c - half;
