@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"name": "BOJ-CPP (C++용)",
+			"path": "BOJ/CPP"
+		},
+        		{
+			"name": "BOJ-C(C용)",
+			"path": "BOJ/C"
+		},
+		{
+			"name": "DS-Practice (C용)",
+			"path": "DS Practice"
+		}
+	],
+	"settings": {
+        // 여기에 공통 설정을 넣거나 비워둬도 됩니다.
+    }
+}
