@@ -2,6 +2,13 @@
 #include <stdlib.h>
 
 // a must be grater than b 
+int swap (int* a, int* b){
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+// a >= b
 int gcd(int a, int b){
     if(b == 0){
         return a;
@@ -17,9 +24,7 @@ int main(){
     scanf("%d %d", &a, &b);
     
     if(a < b){
-        int tmp = a;
-        a = b;
-        b = tmp;
+        swap(&a, &b);
     }
 
     printf("%d", gcd(a, b));
