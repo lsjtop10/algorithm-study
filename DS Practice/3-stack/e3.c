@@ -1,9 +1,11 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 #define N 100
 
-typedef char element;
+typedef int element;
 
 //___type은 우리가 만들 최종 자료구조를 정의한 것임
 typedef struct {
@@ -61,25 +63,48 @@ element pop(StackType* s){
     return e;
 }
 
-int main(){
+int evaluate(char str[]){
     StackType s;
-    StackType s2;
-
     stack_init(&s);
-    push(&s, 'A');
-    push(&s, 'B');
-    push(&s, 'D');
-    push(&s, 'C');
-    printStack(&s);
 
-    printf("After pop() : %c \n", pop(&s));
-    printf("\n");
-    printStack(&s);
+    int op1; int op2; int num;
+    char c;
+    int n = strlen(str);
 
-    printf("After peek() : %c \n", peek(&s));
-    printf("\n");
-    printStack(&s);
+    for(int i = 0; i < n; i++){
+        c = str[i];
+        if(isdigit(c)){
+            num = c - '0';
+            push(&s, num);
+        }else if(strchr("+-*/",c)){
+            op2 = pop(&s);
+            op1 = pop(&s);
+            switch (c)
+            {
+            case '+':
+                push(&s, op1 +  op2);
+                break;
+            case '-':
+                push(&s, op1 -  op2);
+            case '*':
+                push(&s, op1 *  op2);
+            case '/':
+                push(&s, op1 /  op2);
+            }
+        }
+    }
 
+    return pop(&s);
+}
+
+int main(){
+
+    char str[N];
+    printf("Input Exper...");
+    fgets(str, N, stdin);
+
+    printf("%d\n", evaluate(str));
+    return 0;
 }
 
 
