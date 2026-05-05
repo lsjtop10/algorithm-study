@@ -235,7 +235,7 @@ int min(int a, int b) {
     return a;
 }
 
-char findNextCharPassingSpace(char *str, int idx, int length) {
+char findNextCharPassingWhitespaces(char *str, int idx, int length) {
 
     int i = min(idx + 1, length - 1);
     while (i < length - 1 && isspace(str[i])) {
@@ -286,10 +286,10 @@ void parseExpr(char *str, ExprType *expr, err *err) {
         //  1. -기호 뒤에 바로 뒤 기호가 숫자인 경우
         //  2. 숫자로 시작하는 경우
         if ((str[tokenStartPos] == '-' &&
-             isdigit(findNextCharPassingSpace(str, tokenStartPos, n))) ||
+             isdigit(findNextCharPassingWhitespaces(str, tokenStartPos, n))) ||
             isdigit(str[tokenStartPos])) {
 
-            // 아래 루프를 실항하면 endpos는 처음으로 만나는 숫자가 아닌 문자의
+            // 아래 루프를 실행하면 endpos는 처음으로 만나는 숫자가 아닌 문자의
             // 위치를 가리킨다. 숫자가 아닌 문자는 널문자도 포함이기 때문에 범위
             // 설정에 유의.
             tokenEndPos++;
