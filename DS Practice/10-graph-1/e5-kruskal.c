@@ -24,7 +24,7 @@ typedef struct Vertex {
     struct Vertex* next;
 } Vertex;
 
-typedef struct {
+typedef struct GraphType{
     Vertex* vHead;
     Edge* eHead;
     int vCount, eCount
