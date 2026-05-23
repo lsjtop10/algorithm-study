@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define N 6
+#define MAX_STACK_SIZE 6
 #define STACK_MAX_ELEMENTS 30
 
 typedef struct {
@@ -25,7 +25,7 @@ void init(StackType *s) {
 
 int isEmpty(StackType *s) { return s->top == -1; }
 
-int isFull(StackType *s) { return s->top >= N - 1; }
+int isFull(StackType *s) { return s->top >= MAX_STACK_SIZE - 1; }
 
 void printStack(StackType *s) {
     for (int i = s->top; i >= 0; i--) {
@@ -71,15 +71,15 @@ void print(StackType* s){
     printf("\n");
 }
 
-char map[N][N] = {
+char map[MAX_STACK_SIZE][MAX_STACK_SIZE] = {
     {'1', '1', '1', '1', '1', '1'}, {'0', '0', '0', '0', '0', '1'},
     {'1', '0', '1', '0', '0', '1'}, {'1', '1', '1', '0', '0', '1'},
     {'1', '0', '0', '0', '0', 'x'}, {'1', '1', '1', '1', '0', '1'},
 };
 
 void printMaze(element e){
-    for(int r = 0; r < N; r++){
-        for(int c = 0; c < N; c++){
+    for(int r = 0; r < MAX_STACK_SIZE; r++){
+        for(int c = 0; c < MAX_STACK_SIZE; c++){
             if(e.r == r && e.c == c){
                 printf(" @ ");
             
@@ -94,7 +94,7 @@ void printMaze(element e){
 
 void insertPos(StackType *s, int r, int c) {
     // 범위 예외처리
-    if (r < 0 || c < 0 || r >= N || c >= N) {
+    if (r < 0 || c < 0 || r >= MAX_STACK_SIZE || c >= MAX_STACK_SIZE) {
         return;
     }
 
