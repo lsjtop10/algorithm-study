@@ -5,6 +5,7 @@
 
 #define MAX_INPUT 100
 
+
 typedef struct Node{
     char data;
     struct Node* next;
