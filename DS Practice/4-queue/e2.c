@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <time.h>
 
-#define N 10
+#define MAX_STACK_SIZE 10
 
 typedef char element;
 typedef struct DequeType{
-    element arr[N];
+    element arr[MAX_STACK_SIZE];
     int front, rear;
 }DequeType;
 
@@ -21,14 +21,14 @@ int isEmpty(DequeType* q){
 
 int isFull(DequeType* q){
     //Rear의 다음 index가 
-    return q->front == (q -> rear + 1) % N;
+    return q->front == (q -> rear + 1) % MAX_STACK_SIZE;
 }
 
 void addRear(DequeType* q, element e){
     if(isFull(q)){
         printf("Overflow \n");
     }else{
-        q->rear = (q->rear + 1) % N;
+        q->rear = (q->rear + 1) % MAX_STACK_SIZE;
         q->arr[q->rear] = e;
     }
 }
@@ -38,12 +38,12 @@ element dequeue(DequeType* q){
         printf("empty");
     }
 
-    q->front = (q -> front + 1) % N;
+    q->front = (q -> front + 1) % MAX_STACK_SIZE;
     return q->arr[q->front];
 }
 
 element peek(DequeType* q){
-    return q->arr[(q -> front + 1) % N];
+    return q->arr[(q -> front + 1) % MAX_STACK_SIZE];
 }
 
 
@@ -60,7 +60,7 @@ void print(DequeType* q){
     // i == rear이면 반복문에서 rear 다음 원소 즉 유효하지 않은 인덱스를 참조 
     // i < rear일 때 다음 원소 출력 
     while( i != q->rear){
-        i = (i + 1) % N;
+        i = (i + 1) % MAX_STACK_SIZE;
         printf("[%c] ", q->arr[i]);
     }
 
