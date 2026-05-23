@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <time.h>
 
-#define N 10
+#define MAX_STACK_SIZE 10
 
 typedef char element;
 typedef struct DequeType{
-    element arr[N];
+    element arr[MAX_STACK_SIZE];
     int front, rear;
 }DequeType;
 
@@ -20,7 +20,7 @@ int isEmpty(DequeType* q){
 }
 
 int isFull(DequeType* q){
-    return q->rear == N - 1;
+    return q->rear == MAX_STACK_SIZE - 1;
 }
 
 void addRear(DequeType* q, element e){
