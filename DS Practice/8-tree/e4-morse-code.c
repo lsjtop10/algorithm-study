@@ -3,13 +3,13 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define N 10
+#define MAX_STACK_SIZE 10
 
-int BST[N];
+int BST[MAX_STACK_SIZE];
 
 typedef struct Code{
     char alpha;
-    char* code[N];
+    char* code[MAX_STACK_SIZE];
 }Code;
 
 Code table[] = {
