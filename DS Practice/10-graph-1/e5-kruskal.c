@@ -24,13 +24,15 @@ typedef struct Vertex {
     struct Vertex* next;
 } Vertex;
 
-typedef struct GraphType{
+typedef struct GraphType {
     Vertex* vHead;
     Edge* eHead;
     int vCount, eCount
 } GraphType;
 
-int vertices[N] = {-1};
+int vertices[N] = {
+    -1,
+};
 
 void initGraph(GraphType* g) {
     g->vHead = NULL;
@@ -157,14 +159,17 @@ int find(char vName) {
 
     // 그냥 return하면 안 되고 -1이 아닐 때까지 = 루트가 아닌 동안 반복 필요함
     // 그래서 자기 자신이 root이면 그냥 자기 자신을 return한다.
-    while (vNum != -1) {
+    while (vertices[vNum] != -1) {
         vNum = vertices[vNum];
     }
 
     return vNum;
 }
 
-int union_(char vName1, char vName2) { vertices[vName1 - 'A'] = vName2 - 'A'; }
+int union_(char vName1, char vName2) { 
+    // 예전처럼 vertices=[charToNum(vName1)] = charToNum(vName2) 이러면 안 됨.
+    // 그러면 자식노드끼리 연결돼서 같은 트리에 연결되어도 find연산 결과가 달라질 수 있음.
+    vertices[find(vName1)] = find(vName2); }
 
 void kruskal(GraphType* G, Edge* edges[]) {
     int eCnt = 0;
@@ -173,8 +178,8 @@ void kruskal(GraphType* G, Edge* edges[]) {
     int groupV1, groupv2;
     Edge* p;
 
-    // 왜 eCont - 1?
-    while (eCnt < G->eCount - 1) {
+    // 왜 eCont - 1? => vCount - 1이 맞는 듯
+    while (eCnt < G->vCount - 1) {
         p = edges[idx];
 
         // find
@@ -184,6 +189,8 @@ void kruskal(GraphType* G, Edge* edges[]) {
         // uninon and choice
         if (groupV1 != groupv2) {
             eCnt++;
+            // A -> B-> C B->F 인 상황에서 Union C,F 하면 A->B->C->F
+            // B->F 이래서 문제가 될 수도? 이러면 find F랑 find B의 결과가 달라지겠군..
             union_(p->v1, p->v2);
             printf("%d. [%c%c%d]\n", eCnt, p->v1, p->v2, p->weight);
         }
@@ -196,7 +203,7 @@ int main() {
     GraphType G;
     initGraph(&G);
     // 프림 알고리즘은 힙트리? 사실 힙에서 하나씩 빼는 방법이 괜찮아보인는데...
-    // 프림은 트리와 인접한 정점 중에서 가장 작은 정점을 꺼내야 하므로 
+    // 프림은 트리와 인접한 정점 중에서 가장 작은 정점을 꺼내야 하므로
     // 모든 정점을 한 번에 정렬하기보다 그냥 우선순위 큐 쓰는 것이 낫지 않을까?
     makeVertex(&G, 'A');
     makeVertex(&G, 'B');
