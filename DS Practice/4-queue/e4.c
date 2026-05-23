@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <time.h>
 
-#define N 10
+#define MAX_STACK_SIZE 10
 
 typedef char element;
 typedef struct DequeType{
-    element arr[N];
+    element arr[MAX_STACK_SIZE];
     int front, rear;
 }DequeType;
 
@@ -21,7 +21,7 @@ int isEmpty(DequeType* d){
 
 int isFull(DequeType* d){
     //Rear의 다음 index가 front와 같은가? 
-    return d->front == (d->rear + 1) % N;
+    return d->front == (d->rear + 1) % MAX_STACK_SIZE;
 }
 
 void addFront(DequeType* d, element e){
@@ -31,7 +31,7 @@ void addFront(DequeType* d, element e){
         d->arr[d->front] = e;
         
         //
-        d->front = (d->front - 1 + N) % N; 
+        d->front = (d->front - 1 + MAX_STACK_SIZE) % MAX_STACK_SIZE; 
     }
 }
 
@@ -40,7 +40,7 @@ void addRear(DequeType* d, element e){ //enqueue, push
         printf("Overflow \n");
     }else{
 
-        d->rear = (d->rear + 1) % N;
+        d->rear = (d->rear + 1) % MAX_STACK_SIZE;
         d->arr[d->rear] = e;
     }
 }
@@ -51,7 +51,7 @@ element deleteFront(DequeType* d){
         printf("empty");
     }
 
-    d->front = (d->front + 1) % N;
+    d->front = (d->front + 1) % MAX_STACK_SIZE;
     return d->arr[d->front];
 }
 
@@ -64,7 +64,7 @@ element deleteRear(DequeType* d){
     // 0에서 이전 index를 구할 때 -1이 아니라 N-1이 나올 수 있도록
     // d->rear - 1에 N을 더해준다. 이를 다시 N으로 mod연산을 해서 
     // 넘친 부분을 잘라내고 0부터 n - 1 범위로 맞춰준다.
-    d->rear = (d->rear - 1 + N) % N;
+    d->rear = (d->rear - 1 + MAX_STACK_SIZE) % MAX_STACK_SIZE;
     return e;
 }
 
@@ -74,7 +74,7 @@ element getFront(DequeType* d){
         return;
     }
 
-    return d->arr[(d->front + 1) % N];
+    return d->arr[(d->front + 1) % MAX_STACK_SIZE];
 }
 
 element getRear(DequeType* d){
@@ -100,7 +100,7 @@ void print(DequeType* d){
     // i == rear이면 반복문에서 rear 다음 원소 즉 유효하지 않은 인덱스를 참조 
     // i < rear일 때 다음 원소 출력 
     while( i != d->rear){
-        i = (i + 1) % N;
+        i = (i + 1) % MAX_STACK_SIZE;
         printf("[%c] ", d->arr[i]);
     }
 
