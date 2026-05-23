@@ -3,13 +3,13 @@
 #include <string.h>
 #include <ctype.h>
 
-#define N 100
+#define MAX_STACK_SIZE 100
 
 typedef int element;
 
 //___type은 우리가 만들 최종 자료구조를 정의한 것임
 typedef struct {
-    element arr[N];
+    element arr[MAX_STACK_SIZE];
     int top;
 } StackType;
 
@@ -23,7 +23,7 @@ int isEmpty(StackType* s){
 }
 
 int isFull(StackType* s){
-    return s->top >= N - 1;
+    return s->top >= MAX_STACK_SIZE - 1;
 }
 
 void printStack(StackType* s){
@@ -148,9 +148,9 @@ void inFixToPostFix(char expr[]){
 
 int main(){
 
-    char str[N];
+    char str[MAX_STACK_SIZE];
     printf("Input Exper...\n");
-    fgets(str, N, stdin);
+    fgets(str, MAX_STACK_SIZE, stdin);
 
     inFixToPostFix(str);
 
