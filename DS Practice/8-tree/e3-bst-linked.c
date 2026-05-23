@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define N 100
+#define MAX_STACK_SIZE 100
 
 typedef int TElement;
 
