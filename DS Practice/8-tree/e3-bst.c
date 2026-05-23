@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define N 100
+#define MAX_STACK_SIZE 100
 
-int BST[N];
+int BST[MAX_STACK_SIZE];
 
 void insertKey(int rootIdx, int key){
     while (true)
     {
         //rootIdx가 N을 넘어가는 경우가 배열이 꽉 차있는 경우라고 단정하면 안 됨.
         // 편향 이진트리 되면 쉽게 배열의 IDX를 넘을 수 있음. 
-        if(rootIdx >= N){
+        if(rootIdx >= MAX_STACK_SIZE){
             printf("overflow");
             return;
         }
