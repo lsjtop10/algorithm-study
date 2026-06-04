@@ -93,6 +93,7 @@ void iDFS(bool visited[], int s) {
 
     visited[s] = true;
     push(&stack, s);
+
     printf("[%c] ", Graph[s].name);
 
     while (!isEmpty(&stack)) {
@@ -120,7 +121,7 @@ void iDFS(bool visited[], int s) {
         // 더 방문할 수 없는 노드가 없다면(=막다른 노드라면) 
         // 1단계 위로 올라간다. 만약에 그 노드에서 방문할 수 있는 다른 노드가 있으면 그냥 올라가고
         // 아니면 한 단계 올라간다. 이렇게 거슬러 올라가다가 탐색 가능한 노드가 있으면 그 길로 갈 것이다.
-        if (!isfoundUnvisited) {
+        if (isfoundUnvisited == false) {
             pop(&stack);
         }
     }

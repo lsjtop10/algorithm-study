@@ -184,7 +184,7 @@ TreeNode* deleteNode(TreeNode* root, TElement key) {
 
         
     }
-
+    
     return root;
 }
 

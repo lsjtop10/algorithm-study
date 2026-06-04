@@ -6,6 +6,12 @@
 
 typedef int element;
 
+void swap(element* e1, element* e2){
+    element* tmp = e1;
+    e1 = e2;
+    e2 = tmp;
+}
+
 typedef struct HeapType {
     element heap[MAX_STACK_SIZE];
     int heapSize;
@@ -33,6 +39,21 @@ void upHeap(HeapType* h) {
     h->heap[i] = key;
 }
 
+void upHeapRec(HeapType* h, int idx) {
+    if(idx == 1 || idx > h->heapSize ){
+        return;
+    }
+
+    int parent = idx / 2;
+
+    if(h->heap[idx] > h->heap[parent]){
+        swap(&h->heap[idx], &h->heap[parent]);
+        upHeapRec(h, parent);
+    }
+
+}
+
+
 void downHeap(HeapType* h) {
     int parent = 1;
     int child = 2; // 자식 노드르 1개만 했네? 오른쪽은 어떻게? => child는 애초에
@@ -51,7 +72,7 @@ void downHeap(HeapType* h) {
         //
         // 정리하면 루트 노드의 왼쪽 자식과 오른쪽 자식을 비교해서 가장 큰
         // 자식을 찾는 논리임.
-        if ((child < h->heapSize) && (h->heap[child + 1] > h->heap[child])) {
+        if ((child + 1 <= h->heapSize) && (h->heap[child + 1] > h->heap[child])) {
             child++;
         }
 

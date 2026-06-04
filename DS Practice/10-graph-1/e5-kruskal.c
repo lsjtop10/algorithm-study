@@ -41,7 +41,7 @@ void initGraph(GraphType* g) {
     g->vCount = g->eCount = 0;
 }
 
-void makeVertex(GraphType* g, char vName) {
+void appendVertex(GraphType* g, char vName) {
     Vertex* v = (Vertex*)malloc(sizeof(Vertex));
     v->name = vName;
     v->isVisit = false;
@@ -64,13 +64,13 @@ void makeVertex(GraphType* g, char vName) {
 Vertex* findVertex(GraphType* g, char name) {
     Vertex* p = g->vHead;
 
-    while (p->name != name)
+    while (p != NULL && p->name != name)
         p = p->next;
 
     return p;
 }
 
-void makeAdjacentVertex(Vertex* v, char aName, Edge* e) {
+void appendAdjacentVertex(Vertex* v, char aName, Edge* e) {
     AdjVertex* a = (AdjVertex*)malloc(sizeof(AdjVertex));
     a->name = aName;
     a->next = NULL;
@@ -78,16 +78,17 @@ void makeAdjacentVertex(Vertex* v, char aName, Edge* e) {
 
     AdjVertex* p = v->aHead;
 
-    if (p == NULL)
+    if (p == NULL) {
         v->aHead = a;
-    else {
-        while (p->next != NULL)
+    } else {
+        while (p->next != NULL) {
             p = p->next;
+        }
         p->next = a;
     }
 }
 
-void insertEdge(GraphType* G, char v1, char v2, int weight) {
+void appendEdge(GraphType* G, char v1, char v2, int weight) {
     Edge* e = (Edge*)malloc(sizeof(Edge));
     e->v1 = v1;
     e->v2 = v2;
@@ -108,10 +109,10 @@ void insertEdge(GraphType* G, char v1, char v2, int weight) {
     }
 
     Vertex* v = findVertex(G, v1);
-    makeAdjacentVertex(v, v2, e);
+    appendAdjacentVertex(v, v2, e);
 
     v = findVertex(G, v2);
-    makeAdjacentVertex(v, v1, e);
+    appendAdjacentVertex(v, v1, e);
 }
 
 void print(GraphType* G) {
@@ -166,31 +167,33 @@ int find(char vName) {
     return vNum;
 }
 
-int union_(char vName1, char vName2) { 
+int union_(char vName1, char vName2) {
     // 예전처럼 vertices=[charToNum(vName1)] = charToNum(vName2) 이러면 안 됨.
     // 그러면 자식노드끼리 연결돼서 같은 트리에 연결되어도 find연산 결과가 달라질 수 있음.
-    vertices[find(vName1)] = find(vName2); }
+    vertices[find(vName1)] = find(vName2);
+}
 
 void kruskal(GraphType* G, Edge* edges[]) {
     int eCnt = 0;
     int idx = 0;
 
-    int groupV1, groupv2;
+    int groupV1, groupV2;
     Edge* p;
 
     // 왜 eCont - 1? => vCount - 1이 맞는 듯
+    // 트리가 될 조건
     while (eCnt < G->vCount - 1) {
         p = edges[idx];
 
         // find
         groupV1 = find(p->v1);
-        groupv2 = find(p->v2);
+        groupV2 = find(p->v2);
 
         // uninon and choice
-        if (groupV1 != groupv2) {
+        // 간선의 두 정점이 이미 같은 집합에 속해있다면
+        // 그 두 정점끼리 연결된 지점이 이미 존재한다는 뜻.
+        if (groupV1 != groupV2) {
             eCnt++;
-            // A -> B-> C B->F 인 상황에서 Union C,F 하면 A->B->C->F
-            // B->F 이래서 문제가 될 수도? 이러면 find F랑 find B의 결과가 달라지겠군..
             union_(p->v1, p->v2);
             printf("%d. [%c%c%d]\n", eCnt, p->v1, p->v2, p->weight);
         }
@@ -205,21 +208,21 @@ int main() {
     // 프림 알고리즘은 힙트리? 사실 힙에서 하나씩 빼는 방법이 괜찮아보인는데...
     // 프림은 트리와 인접한 정점 중에서 가장 작은 정점을 꺼내야 하므로
     // 모든 정점을 한 번에 정렬하기보다 그냥 우선순위 큐 쓰는 것이 낫지 않을까?
-    makeVertex(&G, 'A');
-    makeVertex(&G, 'B');
-    makeVertex(&G, 'C');
-    makeVertex(&G, 'D');
-    makeVertex(&G, 'E');
-    makeVertex(&G, 'F');
-    makeVertex(&G, 'G');
+    appendVertex(&G, 'A');
+    appendVertex(&G, 'B');
+    appendVertex(&G, 'C');
+    appendVertex(&G, 'D');
+    appendVertex(&G, 'E');
+    appendVertex(&G, 'F');
+    appendVertex(&G, 'G');
 
-    insertEdge(&G, 'A', 'B', 29);
-    insertEdge(&G, 'A', 'F', 10);
-    insertEdge(&G, 'F', 'E', 27);
-    insertEdge(&G, 'E', 'D', 22);
-    insertEdge(&G, 'D', 'C', 22);
-    insertEdge(&G, 'B', 'C', 16);
-    insertEdge(&G, 'B', 'G', 15);
+    appendEdge(&G, 'A', 'B', 29);
+    appendEdge(&G, 'A', 'F', 10);
+    appendEdge(&G, 'F', 'E', 27);
+    appendEdge(&G, 'E', 'D', 22);
+    appendEdge(&G, 'D', 'C', 22);
+    appendEdge(&G, 'B', 'C', 16);
+    appendEdge(&G, 'B', 'G', 15);
 
     print(&G);
     Edge* edges[N];

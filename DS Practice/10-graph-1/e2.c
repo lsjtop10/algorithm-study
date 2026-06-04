@@ -13,26 +13,18 @@ typedef struct {
     int adjCount;
 } Vertex;
 
+// clang-format off
 Vertex Graph[N] = {
-    {'A', {1, 2}, 2},
-    {'B',
-     {
-         0,
-         3,
-     },
-     2},
+    {'A', {1, 2},    2},
+    {'B', {0, 3},    2},
     {'C', {0, 3, 4}, 3},
     {'D', {1, 2, 5}, 3},
     {'E', {2, 6, 7}, 3},
-    {'F', {3}, 1},
-    {'G',
-     {
-         4,
-         7,
-     },
-     2},
-    {'H', {4, 6}, 1},
+    {'F', {3},       1},
+    {'G', {4, 7},    2},
+    {'H', {4, 6},    1}
 };
+// clang-format on
 
 void rDfs(bool visited[], int s) {
     visited[s] = true;

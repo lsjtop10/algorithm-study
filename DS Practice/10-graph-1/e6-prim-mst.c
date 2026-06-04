@@ -11,9 +11,17 @@
 
 char vName[N] = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
 
-int graph[N][N] = {{0, 29, INF, INF, INF, 10, INF}, {25, 0, 16, INF, INF, INF, 15}, {INF, 16, 0, 12, INF, INF, 16},
-                   {INF, INF, 12, 0, 22, INF, 18},  {INF, INF, INF, 22, 0, 27, 25}, {10, INF, INF, INF, 27, 0, INF},
-                   {INF, 15, INF, 18, 25, INF, 0}};
+// clang-format off
+int graph[N][N] = {
+    {0, 29, INF, INF, INF, 10, INF}, 
+    {25, 0, 16, INF, INF, INF, 15}, 
+    {INF, 16, 0, 12, INF, INF, 16},
+    {INF, INF, 12, 0, 22, INF, 18},  
+    {INF, INF, INF, 22, 0, 27, 25}, 
+    {10, INF, INF, INF, 27, 0, INF},
+    {INF, 15, INF, 18, 25, INF, 0}
+};
+//clang-format on
 
 bool visited[N];
 int dist[N];
@@ -49,11 +57,13 @@ void prim(int startVNum) {
         printf("[%c, %d]", vName[vNum], dist[vNum]);
 
         for (int aNum = 0; aNum < N; aNum++) {
-            if (visited[aNum] == false &&
-                // TODO: 여기에서 dist[vNum]이 왜 안 들어가는지 확인 필요
-                //  아 이거 최단경로 찾는 알고리즘이 아니지.. 
-                /*dist[vNum]*/ +graph[vNum][aNum] < dist[aNum]) {
-                dist[aNum] = /*dist[vNum]*/ +graph[vNum][aNum];
+            if (visited[aNum] == false && graph[vNum][aNum] != INF &&
+                /*dist[vNum] + */ graph[vNum][aNum] < dist[aNum]) {
+                dist[aNum] = /*dist[vNum] +*/graph[vNum][aNum];
+
+                // 자 여기에서 주석친 부분을 활성화하면 바로 다익스트라 알고리즘이 된다.
+                // 프림 알고리즘은 현재까지 만들어진 트리 전체와 '인접 정점'사이의 최단거리 유지. 
+                // 한 노드가 추가됨으로써 업데이트되는 최단거리를 이 루프에서 계산한다. 
             }
         }
     }

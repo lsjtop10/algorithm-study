@@ -10,6 +10,7 @@ typedef struct AdjVertex {
 typedef struct Vertex {
     char name;
     bool isVisted;
+    int nAdjVertex;
     struct Vertex* next;
 
     AdjVertex* adjHead;
@@ -21,13 +22,14 @@ typedef struct {
 
 void initGraph(GraphType* g) { g->head = NULL; }
 
-void makeVertex(GraphType* g, char name) {
+void appendVertex(GraphType* g, char name) {
     Vertex* v = (Vertex*)malloc(sizeof(Vertex));
 
     v->name = name;
     v->isVisted = false;
     v->adjHead = NULL;
     v->next = NULL;
+    v->nAdjVertex = 0;
 
     Vertex* p = g->head;
     if (p == NULL) {
@@ -46,7 +48,7 @@ void makeVertex(GraphType* g, char name) {
 Vertex* findVertex(GraphType* g, char name){
     Vertex* p = g->head;
 
-    while (p->name != name){
+    while (p != NULL && p->name != name){
         p = p->next;
     }
     return p;
@@ -58,6 +60,7 @@ void makeAdjacentVertex(Vertex* v, char name){
 
     adjV->name = name;
     adjV->next = NULL;
+    v->nAdjVertex++;
 
     AdjVertex* p = v->adjHead;
     if(p == NULL){
@@ -108,14 +111,14 @@ int main() {
     GraphType g;
     initGraph(&g);
 
-    makeVertex(&g, 'A');
-    makeVertex(&g, 'B');
-    makeVertex(&g, 'C');
-    makeVertex(&g, 'D');
-    makeVertex(&g, 'E');
-    makeVertex(&g, 'F');
-    makeVertex(&g, 'G');
-    makeVertex(&g, 'H');
+    appendVertex(&g, 'A');
+    appendVertex(&g, 'B');
+    appendVertex(&g, 'C');
+    appendVertex(&g, 'D');
+    appendVertex(&g, 'E');
+    appendVertex(&g, 'F');
+    appendVertex(&g, 'G');
+    appendVertex(&g, 'H');
 
     insertEdge(&g, 'A', 'B');
     insertEdge(&g, 'A', 'C');
